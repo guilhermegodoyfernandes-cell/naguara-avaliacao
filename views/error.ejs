@@ -1,0 +1,10 @@
+<%- include('partials/head') %>
+
+<section class="success">
+  <div class="success-icon">🚧</div>
+  <h1><%= code === 503 ? 'Problema temporário' : (code === 404 ? 'Página não encontrada' : 'Algo deu errado') %></h1>
+  <p><%= message %></p>
+  <a class="button button-primary button-big" href="/">Voltar ao início</a>
+</section>
+
+<%- include('partials/footer') %>

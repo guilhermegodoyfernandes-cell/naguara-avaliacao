@@ -1,0 +1,58 @@
+<%- include('partials/head') %>
+
+<section class="hero">
+  <img class="hero-banner" src="/img/banner.png" alt="Logotipo Na'Guará, comidas venezolanas — arepas e tequeños">
+  <p class="hero-tagline">Comida Venezolana · Arepas · Tequeños</p>
+  <h1>Sua opinião vale <span class="highlight">ouro</span>!</h1>
+  <p class="hero-text">
+    Avalie o que você provou em estrelas — de 1 a 5 — em vários aspectos e
+    ajude a Na'Guará a ficar ainda mais deliciosa.
+  </p>
+  <a class="button button-primary button-big" href="/avaliar">⭐ Avaliar agora</a>
+</section>
+
+<section class="section">
+  <h2>Nossos produtos</h2>
+  <% if (products.length === 0) { %>
+    <p class="muted">Nenhum produto cadastrado ainda. Volte em breve!</p>
+  <% } else { %>
+    <div class="product-grid">
+      <% products.forEach(function (p) { %>
+        <article class="product-card">
+          <h3><%= p.name %></h3>
+          <p class="product-desc"><%= p.description %></p>
+          <% if (p.review_count > 0) { %>
+            <p class="stars-display" title="<%= p.avg_rating %> de 5 estrelas">
+              <span class="stars" aria-hidden="true"><%= '★'.repeat(Math.min(5, Math.round(Number(p.avg_rating)))) %></span>
+              <span class="muted"><%= Number(p.avg_rating).toFixed(1) %> · <%= p.review_count %> avaliação<%= p.review_count == 1 ? '' : 'es' %></span>
+            </p>
+          <% } else { %>
+            <p class="muted">Ainda sem avaliações — seja a primeira pessoa a avaliar!</p>
+          <% } %>
+        </article>
+      <% }); %>
+    </div>
+  <% } %>
+</section>
+
+<section class="section section-alt">
+  <h2>Últimos comentários</h2>
+  <% if (reviews.length === 0) { %>
+    <p class="muted">Sem comentários publicados ainda.</p>
+  <% } else { %>
+    <ul class="reviews-list">
+      <% reviews.forEach(function (r) { %>
+        <li class="review-card">
+          <p class="review-head">
+            <strong><%= r.full_name %></strong>
+            <span class="muted"><%= r.created_at.toLocaleDateString('pt-BR') %></span>
+          </p>
+          <p class="review-products muted"><%= r.products.join(', ') %></p>
+          <blockquote><%= r.comment %></blockquote>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

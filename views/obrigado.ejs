@@ -1,0 +1,12 @@
+<%- include('partials/head') %>
+
+<section class="success">
+  <div class="success-icon">✅</div>
+  <h1>Obrigado pela sua avaliação!</h1>
+  <p>Sua opinião ajuda a Na'Guará a servir arepas e tequeños cada vez melhores.</p>
+  <% if (ref) { %><p class="muted">Protocolo Nº <%= ref %></p><% } %>
+  <a class="button button-primary button-big" href="/avaliar">Avaliar outro produto</a>
+  <a class="button button-ghost" href="/">Voltar ao início</a>
+</section>
+
+<%- include('partials/footer') %>

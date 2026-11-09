@@ -1,0 +1,26 @@
+{
+  "name": "Na'Guará — Avaliações",
+  "short_name": "Na'Guará",
+  "description": "Avalie os arepas, empanadas e tequeños da Na'Guará Comida Venezolana.",
+  "id": "/",
+  "start_url": "/?utm_source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0b0b0b",
+  "theme_color": "#0b0b0b",
+  "lang": "pt-BR",
+  "categories": ["food", "shopping"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Avaliar produtos",
+      "url": "/avaliar",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

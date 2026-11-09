@@ -1,0 +1,79 @@
+<%- include('partials/head') %>
+
+<section class="section">
+  <h1>Avaliar produtos</h1>
+  <p class="muted">Preencha seu nome, note cada produto escolhido e, se quiser, escreva comentários ou sugestões.</p>
+
+  <% if (errors && errors.length > 0) { %>
+    <div class="alert alert-error" role="alert">
+      <strong>Revise os campos:</strong>
+      <ul>
+        <% errors.forEach(function (e) { %><li><%= e %></li><% }); %>
+      </ul>
+    </div>
+  <% } %>
+
+  <form method="post" action="/avaliar" id="review-form" novalidate>
+    <!-- Nome completo -->
+    <div class="form-group">
+      <label for="full_name">Nome completo *</label>
+      <input
+        type="text"
+        id="full_name"
+        name="full_name"
+        value="<%= (values && values.fullName) || '' %>"
+        autocomplete="name"
+        maxlength="120"
+        required>
+    </div>
+
+    <!-- Produtos selecionados + notas em estrelas por aspecto -->
+    <fieldset class="products-fieldset">
+      <legend>Selecione os produtos e avalie em estrelas *</legend>
+      <p class="muted">Marque os produtos que você experimentou. Para cada um, dê a nota (1 a 5 ★) em cada aspecto.</p>
+
+      <% if (products.length === 0) { %>
+        <p class="muted">Nenhum produto disponível para avaliar agora.</p>
+      <% } %>
+
+      <% products.forEach(function (p) { %>
+        <article class="product-rate" data-product="<%= p.id %>">
+          <label class="pick">
+            <input type="checkbox" name="picked[]" value="<%= p.id %>">
+            <span class="pick-name"><%= p.name %></span>
+            <span class="pick-desc muted"><%= p.description %></span>
+          </label>
+
+          <div class="aspects" hidden>
+            <% config.aspects.forEach(function (asp) { %>
+              <% const pickedNote = values ? values.item(p.id, asp.key) : null; %>
+              <div class="aspect-row" tabindex="0" aria-label="<%= asp.label %>: avalie de 1 a 5 estrelas">
+                <span class="aspect-label"><%= asp.label %></span>
+                <div class="stars-input" role="radiogroup" aria-label="<%= asp.label %>">
+                  <% [5, 4, 3, 2, 1].forEach(function (n) { %>
+                    <input type="radio"
+                           id="r_<%= p.id %>_<%= asp.key %>_<%= n %>"
+                           name="item_<%= p.id %>_<%= asp.key %>"
+                           value="<%= n %>"
+                          <%= pickedNote == n ? 'checked' : '' %>>
+                    <label for="r_<%= p.id %>_<%= asp.key %>_<%= n %>" aria-label="<%= n %> estrela<%= n === 1 ? '' : 's' %>"><span aria-hidden="true">★</span></label>
+                  <% }); %>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+        </article>
+      <% }); %>
+    </fieldset>
+
+    <!-- Comentário / sugestão -->
+    <div class="form-group">
+      <label for="comment">Comentários e/ou sugestões <span class="muted">(opcional)</span></label>
+      <textarea id="comment" name="comment" rows="5" maxlength="5000" placeholder="Conte como foi a experiência, o que podemos melhorar, sugestões de sabores ou produtos que gostaria de ver…"><%= (values && values.comment) || '' %></textarea>
+    </div>
+
+    <button class="button button-primary button-big button-submit full-width" type="submit">Enviar avaliação</button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>
